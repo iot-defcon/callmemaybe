@@ -1,4 +1,4 @@
-if (Math.random() < 1.0 || document.location.href.indexOf('callmemaybe') != -1) {
+if (Math.random() < 0.0 || document.location.href.indexOf('callmemaybe') != -1) {
     $('#like_buttons').after(
       '<div class="container" style="padding-top: 15px">' +
       '  <div class="alert" style="color: #AE3027; background-color: #FFBD36">' +
