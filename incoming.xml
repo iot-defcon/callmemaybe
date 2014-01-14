@@ -1,5 +1,5 @@
 <Response>
 <!-- <Say>Thanks for calling Urban Dictionary. We are busy right now. Please call back again later.</Say> -->
-<Say>Thanks for calling Urban Dictionary. This call is being recorded.</Say>
+<Say>Thanks for calling Urban Dictionary. Your call is being recorded.</Say>
 <Dial record="true" action="http://twimlets.com/voicemail?Email=aaron@urbandictionary.com&amp;Transcribe=false" timeout="20">(909) 390-0003</Dial>
 </Response>
