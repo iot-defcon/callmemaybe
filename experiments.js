@@ -17,6 +17,9 @@ var pageVariations = [
     },
     function () {
         $('.autolink').css({'background-color': '#FFC745', 'border-radius': '5px', padding: '3px', 'color': '#333'});
+    },
+    function () {
+        $('.autolink').css({'background-color': 'lightgrey', 'border-radius': '5px', padding: '3px', 'color': 'white'});
     }
 ];
 
