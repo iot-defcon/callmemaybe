@@ -1,10 +1,8 @@
 var pageVariations = [
     function () {
-        console.log($);
     },
     function () {
-        var newClass = document.body.getAttribute('class') + ' variation1';
-        document.body.setAttribute('class', newClass);
+        $(document.body).addClass('variation1');
     }
 ];
 
