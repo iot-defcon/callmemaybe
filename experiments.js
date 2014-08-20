@@ -8,7 +8,7 @@ var pageVariations = [
 
 var experiment = 'A6baa2IYRrWkqeVgndseyA';
 var variation = cxApi.getChosenVariation(experiment);
-if (!variation) {
+if (variation === undefined) {
   var variation = Math.floor(Math.random() * 1000000000) % pageVariations.length;
   cxApi.setChosenVariation(variation, experiment);
 }
