@@ -26,13 +26,15 @@ var pageVariations = [
 if (document.location.pathname == '/') {
     var experiment = '9I2nDfeoTBi0qLE89paAZA';
     var variation = cxApi.getChosenVariation(experiment);
-    if (variation === undefined) {
-        variation = Math.floor(Math.random() * 1000000000) % pageVariations.length;
-        cxApi.setChosenVariation(variation, experiment);
+    if (variation != cxApi.NOT_PARTICIPATING) {
+        if (variation == cxApi.NO_CHOSEN_VARIATION) {
+            variation = Math.floor(Math.random() * 1000000000) % pageVariations.length;
+            cxApi.setChosenVariation(variation, experiment);
+        }
+
+        pageVariations[variation]();
+
+        window._gaq = window._gaq || [];
+        window._gaq.push(['_trackEvent', 'Experiments', 'variation', experiment, variation, true]);
     }
-
-    pageVariations[variation]();
-
-    window._gaq = window._gaq || [];
-    window._gaq.push(['_trackEvent', 'Experiments', 'variation', experiment, variation, true]);
 }
