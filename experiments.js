@@ -33,9 +33,9 @@ var pageVariations = [
     }
 ];
 
-var experiment = 'xYsqL0doSUygdg-yCH17-w';
+var experiment = 'vEAOQHnSSoeUNID5QjS16g';
 var variation = cxApi.getChosenVariation(experiment);
-if (variation != cxApi.NOT_PARTICIPATING && new Date().getTime() < 1409227757000) {
+if (variation != cxApi.NOT_PARTICIPATING && new Date().getTime() < 1409769977000) {
     if (variation == cxApi.NO_CHOSEN_VARIATION) {
         variation = Math.floor(Math.random() * 1000000000) % pageVariations.length;
         cxApi.setChosenVariation(variation, experiment);
