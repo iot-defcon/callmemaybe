@@ -1,0 +1,12 @@
+%html
+  %head
+    %link{href: 'http://cdn.jsdelivr.net/jasmine/2.0.0rc2/jasmine.css', rel: 'stylesheet', type: 'text/css'}
+    %script{src: 'http://cdn.jsdelivr.net/jasmine/2.0.0rc2/jasmine.js', type: 'text/javascript'}
+    %script{src: 'http://cdn.jsdelivr.net/jasmine/2.0.0rc2/jasmine-html.js', type: 'text/javascript'}
+    %script{src: 'http://cdn.jsdelivr.net/jasmine/2.0.0rc2/boot.js', type: 'text/javascript'}
+
+  %body
+    :coffeescript
+      describe 'jasmine', ->
+        it 'compares two numbers', ->
+          expect(2).toEqual(2)
