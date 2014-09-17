@@ -9,5 +9,5 @@
 }).call(this);
 
 /*
-//@ sourceMappingURL=specs.map
+//@ sourceMappingURL=experiments_spec.map
 */
