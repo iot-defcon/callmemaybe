@@ -5,40 +5,46 @@
     TIME = 1409769977000 - 1;
     EXPERIMENT = 'vEAOQHnSSoeUNID5QjS16g';
     beforeEach(function() {
+      var i;
       window._gaq = [];
+      window.pageVariations = (function() {
+        var _i, _results;
+        _results = [];
+        for (i = _i = 0; _i <= 10; i = ++_i) {
+          _results.push(jasmine.createSpy(i));
+        }
+        return _results;
+      })();
       window.cxApi = jasmine.createSpyObj('cxApi', ['setChosenVariation', 'getChosenVariation']);
       cxApi.NOT_PARTICIPATING = -2;
       return cxApi.NO_CHOSEN_VARIATION = -1;
     });
-    it('ignores users who do not participate', function() {
-      cxApi.getChosenVariation.and.callReturn(cxApi.NOT_PARTICIPATING);
-      runVariation(TIME);
-      return expect(window._gaq.length).toEqual(0);
+    describe('when the variation is NOT_PARTICIPATING', function() {
+      return it('runs no variations', function() {
+        cxApi.getChosenVariation.and.callReturn(cxApi.NOT_PARTICIPATING);
+        runVariation(TIME);
+        return expect(window._gaq.length).toEqual(0);
+      });
     });
-    it('sets a variation randomly', function() {
-      cxApi.getChosenVariation.and.callReturn(cxApi.NO_CHOSEN_VARIATION);
-      spyOn(Math, 'floor').and.callReturn(5);
-      runVariation(TIME);
-      expect(window._gaq[0]).toEqual(['_trackEvent', 'Experiments', 'variation', EXPERIMENT, 5, true]);
-      return expect(cxApi.setChosenVariation).toHaveBeenCalledWith(5, EXPERIMENT);
+    describe('when the variation is NO_CHOSEN_VARIATION', function() {
+      return it('sets a random variation and runs it', function() {
+        cxApi.getChosenVariation.and.callReturn(cxApi.NO_CHOSEN_VARIATION);
+        spyOn(Math, 'floor').and.callReturn(5);
+        runVariation(TIME);
+        expect(window._gaq[0]).toEqual(['_trackEvent', 'Experiments', 'variation', EXPERIMENT, 5, true]);
+        expect(cxApi.setChosenVariation).toHaveBeenCalledWith(5, EXPERIMENT);
+        return expect(pageVariations[5]).toHaveBeenCalled();
+      });
     });
-    return it('runs a variation if already chosen', function() {
-      var i;
-      window.pageVariations = (function() {
-        var _i, _results;
-        _results = [];
-        for (i = _i = 0; _i <= 2; i = ++_i) {
-          _results.push(jasmine.createSpy("spy " + i));
-        }
-        return _results;
-      })();
-      cxApi.getChosenVariation.and.callReturn(2);
-      runVariation(TIME);
-      expect(window._gaq[0]).toEqual(['_trackEvent', 'Experiments', 'variation', EXPERIMENT, 2, true]);
-      expect(cxApi.setChosenVariation).not.toHaveBeenCalled();
-      expect(pageVariations[0]).not.toHaveBeenCalled();
-      expect(pageVariations[1]).not.toHaveBeenCalled();
-      return expect(pageVariations[2]).toHaveBeenCalled();
+    return describe('when the variation is set', function() {
+      return it('runs it', function() {
+        cxApi.getChosenVariation.and.callReturn(2);
+        runVariation(TIME);
+        expect(window._gaq[0]).toEqual(['_trackEvent', 'Experiments', 'variation', EXPERIMENT, 2, true]);
+        expect(cxApi.setChosenVariation).not.toHaveBeenCalled();
+        expect(pageVariations[1]).not.toHaveBeenCalled();
+        return expect(pageVariations[2]).toHaveBeenCalled();
+      });
     });
   });
 
