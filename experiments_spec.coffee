@@ -1,5 +1,6 @@
 describe 'runVariation', ->
   TIME = 1409769977000 - 1
+  EXPERIMENT = 'vEAOQHnSSoeUNID5QjS16g'
 
   beforeEach ->
     window._gaq = []
@@ -17,5 +18,17 @@ describe 'runVariation', ->
     cxApi.getChosenVariation.and.callReturn cxApi.NO_CHOSEN_VARIATION
     spyOn(Math, 'floor').and.callReturn 5
     runVariation(TIME)
-    expect(window._gaq[0]).toEqual [ '_trackEvent', 'Experiments', 'variation', 'vEAOQHnSSoeUNID5QjS16g', 5, true ]
-    expect(cxApi.setChosenVariation).toHaveBeenCalledWith 5, 'vEAOQHnSSoeUNID5QjS16g'
+    expect(window._gaq[0]).toEqual [ '_trackEvent', 'Experiments', 'variation', EXPERIMENT, 5, true ]
+    expect(cxApi.setChosenVariation).toHaveBeenCalledWith 5, EXPERIMENT
+
+  it 'runs a variation if already chosen', ->
+    window.pageVariations = (jasmine.createSpy("spy #{i}") for i in [0..2])
+
+    cxApi.getChosenVariation.and.callReturn 2
+    runVariation(TIME)
+    expect(window._gaq[0]).toEqual [ '_trackEvent', 'Experiments', 'variation', EXPERIMENT, 2, true ]
+    expect(cxApi.setChosenVariation).not.toHaveBeenCalled()
+
+    expect(pageVariations[0]).not.toHaveBeenCalled()
+    expect(pageVariations[1]).not.toHaveBeenCalled()
+    expect(pageVariations[2]).toHaveBeenCalled()
